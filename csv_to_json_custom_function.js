@@ -8,9 +8,7 @@ fs.readFile(path.join(__dirname, '/customer-data.csv'), {encoding: 'utf-8'}, fun
     var attributes = tt[0].split(',')
     var obj = {}
     var combine =  [];
-    var entity = []
-    var object = {}
-    
+        
     for (var j = 1; j < tt.length - 1; j++) { 
         entity = tt[j].split(',')
     	for (var i = 0; i < attributes.length ; i++) {
