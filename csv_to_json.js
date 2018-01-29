@@ -1,31 +1,20 @@
+const csvFilePath = 'customer-data.csv'
+const csv = require('csvtojson')
 const fs = require('fs')
-const path = require('path')
 
-fs.readFile(path.join(__dirname, '/customer-data.csv'), {encoding: 'utf-8'}, function(error, data) {
-	if (error) return console.error(error)
+let arr = []
 
-    var tt = data.split('\n')
-    var attributes = tt[0].split(',')
-    var obj = {}
-    var combine =  [];
-    var entity = []
-    var object = {}
-    
-    for (var j = 1; j < tt.length - 1; j++) { 
-        entity = tt[j].split(',')
-    	for (var i = 0; i < attributes.length ; i++) {
-    		obj[attributes[i]] = entity[i]
-        }
-            
-        combine.push(obj)
-    }
-
-    combine = JSON.stringify(combine)
-    fs.writeFile("./customer-data.json", combine,"utf-8", function(error) {
+csv()
+.fromFile(csvFilePath)
+.on('json',(jsonObj)=>{
+	arr.push(jsonObj)
+})
+.on('done',(error)=>{
+	arr = JSON.stringify(arr)
+	fs.writeFile("customer-data-module.json", arr, "utf-8", function(error) {
         if (error) {
             return console.log(error)
         }
     })
-
-    console.log(combine);
+    console.log(arr)
 })
