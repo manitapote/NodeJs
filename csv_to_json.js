@@ -19,5 +19,13 @@ fs.readFile(path.join(__dirname, '/customer-data.csv'), {encoding: 'utf-8'}, fun
             
         combine.push(obj)
     }
-    console.log(JSON.stringify(combine));
+
+    combine = JSON.stringify(combine)
+    fs.writeFile("./customer-data.json", combine,"utf-8", function(error) {
+        if (error) {
+            return console.log(error)
+        }
+    })
+
+    console.log(combine);
 })
